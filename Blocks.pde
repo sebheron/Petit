@@ -1,8 +1,8 @@
 // Platform is the same as image object however it uses a length times block width to determine its total width.
 class Platform extends ImageObject {
 
-  Platform (float _x, float _y, PImage _image, float _platformLength) {
-    super(_x, _y, _platformLength * 64, 64, _image, _platformLength * 64, 64);
+  Platform (float _x, float _y, PImage[] _images, float _platformLength) {
+    super(_x, _y, _platformLength * 64, 64, _images, _platformLength * 64, 64);
   }
 
   // Platforms are drawn as one image per each block it takes up.
@@ -11,17 +11,17 @@ class Platform extends ImageObject {
     if (x > player.x - width/2 - halfWidth | x < player.x + width/2 + halfWidth) {
       int loops = round(w / 64);
       for (int i = 0; i < loops; i++) {
-        image(objectImage, x - camera.x + (64 * i), y - camera.y, 64, h);
+        image(images[0], x - view.x + (64 * i), y - view.y, 64, h);
       }
     }
   }
 }
 
 // Box is the same as MultiImageObject, however it adds two new functions to determine the state of the box.
-class Box extends MultiImageObject {
+class Box extends ImageObject {
 
-  Box (float _x, float _y, PImage _image, PImage[] _brokeImage) {
-    super(_x, _y, 64, 64, _image, _brokeImage, 64, 64);
+  Box (float _x, float _y, PImage[] _images) {
+    super(_x, _y, 64, 64, _images, 64, 64);
     frame = 0;
   }
 
@@ -49,9 +49,9 @@ class Box extends MultiImageObject {
   // If the box is enabled draw its normal sprite, if not draw the broken sprite.
   void drawBox() {
     if (!enabled) {
-      image(images[0], x - camera.x, y - camera.y, w, h);
+      image(images[1], x - view.x, y - view.y, w, h);
     } else {
-      image(objectImage, x - camera.x, y - camera.y, w, h);
+      image(images[0], x - view.x, y - view.y, w, h);
     }
   }
 }

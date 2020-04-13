@@ -3,13 +3,13 @@ import java.util.*;
 
 boolean loading = true;
 
-HUD hud;
-
 Player player;
 
 LevelManager level;
 
-Object camera, world;
+Camera view;
+
+Object world;
 
 void setup() {
   surface.setTitle("SQUIRREL!");
@@ -19,26 +19,21 @@ void setup() {
   
   // Load content from files.
   LoadContent();
-  
-  // Create new hud.
-  hud = new HUD();
 
   // Create new player object.
   player = new Player(320, height/2, 50, 37.5, 91.25, 50); //<>//
 
   // Create new level manager.
   level = new LevelManager();
+  
   //Load the first level.
   level.loadLevel(levels[levelIndex]);
 
   // Create new world space.
   world = new Object(0, 0, 8448, 2288);
+  
   // Create camera view.
-  camera = new Object(0, 0, width, height);
-
-  // Set the camera view to far left center of the world.
-  camera.x = (world.x + world.w/2) - camera.w/2;
-  camera.y = (world.y + world.h/2) - camera.h/2;
+  view = new Camera();
 }
 
 void draw() {
@@ -46,6 +41,22 @@ void draw() {
   if (loading) {
     LoadingScene();
   } else {
-    GameScene(); 
+    //GameScene(); 
+    test();
   }
+}
+
+int frame;
+
+void test(){
+  background(0);
+  Entity e = new Entity(5, 6, 10, 10, null, 0, 0);
+  GravityComponent g = new GravityComponent(e);
+  
+  e.x += 5;
+  
+  SpriteSheet sheet = new SpriteSheet("spritesheet.png", 20, 60);
+  image(sheet.sprites[frame % sheet.count], width/2, height/2);
+  println(frame % sheet.count);
+  frame++;
 }

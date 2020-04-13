@@ -1,3 +1,21 @@
+class Entity extends ImageObject {
+  UUID id;
+  
+  Entity(float _x, float _y, float _w, float _h, PImage[] _images, float _imageWidth, float _imageHeight){
+    super(_x, _y, _w, _h, _images, _imageWidth, _imageHeight);
+    id = UUID.randomUUID();
+  }
+  
+  Entity(float _x, float _y, PImage[] _images){
+    super(_x, _y, _images[0].width, _images[0].height, _images, _images[0].width, _images[0].height);
+  }
+  
+  Entity(PImage[] _images){
+    super(0, 0, _images[0].width, _images[0].height, _images, _images[0].width, _images[0].height);
+  }
+}
+
+
 // The player class is the most involved.
 class Player extends ImageObject {
   //Local player variables.
@@ -110,7 +128,6 @@ class Player extends ImageObject {
       y = startY;
       damageAudio.rewind();
       damageAudio.play();
-      hud.removeLife();
     }
   }
 
@@ -136,15 +153,16 @@ class Player extends ImageObject {
   @Override
     void drawObject() {
     pushMatrix();// Push the current matrix for screen.
+    PImage currentImage;
     if (onGround && !up) {
       if (velocityX != 0) {
-        objectImage = walkingSprites[round(frame) % 4];// Set the current image to a respective walking sprite.
+        currentImage = walkingSprites[round(frame) % 4];// Set the current image to a respective walking sprite.
       } else {
-        objectImage = walkingSprites[1];// Set the current image to an idle walking sprite.
+        currentImage = walkingSprites[1];// Set the current image to an idle walking sprite.
       }
       frame += abs(velocityX/25);// Increase the frame by the velocity.
     } else {
-      objectImage = jumpingSprites[round(frame) % 4];//  
+      currentImage = jumpingSprites[round(frame) % 4];//  
       frame += 0.4; // Increase the frame by 0.4.
     }
 
@@ -158,9 +176,9 @@ class Player extends ImageObject {
 
     //Draw the sprite.
     if (currentScale < 0) {
-      image(objectImage, -x - imageWidth/2f + camera.x, y - imageHeight + h - camera.y, imageWidth, imageHeight);
+      image(currentImage, -x - imageWidth/2f + view.x, y - imageHeight + h - view.y, imageWidth, imageHeight);
     } else {
-      image(objectImage, x - camera.x, y - imageHeight + h - camera.y, imageWidth, imageHeight);
+      image(currentImage, x - view.x, y - imageHeight + h - view.y, imageWidth, imageHeight);
     }
     popMatrix(); // Pop the original matrix.
   }

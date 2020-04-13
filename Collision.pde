@@ -31,7 +31,6 @@ int CheckCollisions(Player p1, Object p2) {
         } else {
           if (p2 instanceof Box){
             p1.jump(breakAudio, p1.jumpForce / 2);
-            hud.addScore(p2.x, p2.y, 50);
             p2.enabled = false;
           } else if (p2 instanceof Collectable){
             CollectCollectable((Collectable)p2);
@@ -66,14 +65,11 @@ int CheckCollisions(Player p1, Object p2) {
 void CollectCollectable(Collectable collectable) {
   // If collectable is acorn, add 100 to score, add 1 to acorn count and play collectable sound.
   if (collectable.typeOf == CollectableType.ACORN){
-    hud.acorns++;
-    hud.addScore(collectable.x, collectable.y, 100);
     collectAudio.rewind();
     collectAudio.play();
   // If collectable is page, add 200 to score, move to the next level and play level complete sound.
   // If all levels have been complete then reset level count and play win scene.
   } else if (collectable.typeOf == CollectableType.PAGE){
-    hud.addScore(collectable.x, collectable.y, 200);
     levelIndex++;
     if (levelIndex >= levels.length){
       levelIndex = 0;

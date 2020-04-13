@@ -4,7 +4,7 @@ AudioPlayer musicAudio, jumpAudio, breakAudio, collectAudio, damageAudio, levelC
 
 PImage backgroundImage, background2Image, background3Image;
 
-PImage woodImage, boxImage;
+PImage[] woodImages, boxImages;
 
 PImage[] walkingSprites, jumpingSprites, pageSprites, acornSprites, brokenBoxSprites;
 
@@ -33,15 +33,14 @@ void LoadContent(){
   
   // Begin looping the music here.
   // NOTE: When music is finished, add information about how avg. game time takes 10 minutes, song loops 100 times for 15 seconds (per se) so song loops for 25 minutes.
-  musicAudio.loop(100);
+  //musicAudio.loop(100);
     
   backgroundImage = loadImage("background.png");
   background2Image = loadImage("background2.png");
   background3Image = loadImage("background3.png");
   
-  woodImage = loadImage("wood.png");
-  boxImage = loadImage("box.png");
-  brokenBoxSprites = new PImage [] { loadImage("brokenbox.png") };
+  woodImages = new PImage[]{loadImage("wood.png")};
+  boxImages = new PImage [] {loadImage("box.png"), loadImage("brokenbox.png")};
   
   walkingSprites = new PImage[4];
   for (int i = 0; i < 4; i++) {

@@ -10,7 +10,8 @@ void LoadingScene() {
   // Create a string of loading dots according to the current frame count.
   String loadingDots = new String(new char[(frameCount % 24) / 6]).replace("\0", ".");
   // Draw the text preceded by the word loading in caps.
-  textOutlined("LOADING" + loadingDots, width/2, height/2, 255, 0);
+  fill(255);
+  text("LOADING" + loadingDots, width/2, height/2);
   
   // The way the loading works is if the frame rate overtakes 60 a total of 15 times then we will assume it has stablized enough to move onto the game.
   // Another way considered was to reset the loadingCount to zero when a frame rate of 60 wasn't achieved, however this meant loading was unecessarily long.
@@ -37,16 +38,16 @@ void GameScene() {
   }
   
   // Move the camera according to the players new position.
-  // This should happen last to avoid awkward movement of the camera.
-  MoveCamera();
+  // This should happen last to avoid awkward movement of the view.
+  view.update(player);
 
   // Draw the sky background.
   background(135, 206, 235);
 
   // Draw the trees and buildings.
-  DisplayBackground(background3Image, 0);
-  DisplayBackground(background2Image, 2);
-  DisplayBackground(backgroundImage, 1);
+  //DisplayBackground(background3Image, 0);
+  //DisplayBackground(background2Image, 2);
+  //DisplayBackground(backgroundImage, 1);
 
   // Display the level objects.
   // Only those present within the camera space will be drawn.
@@ -56,5 +57,4 @@ void GameScene() {
   
   // Draw the player and hud.
   player.display();
-  hud.display();
 }
