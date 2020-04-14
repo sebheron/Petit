@@ -14,11 +14,10 @@ void setup() {
   frameRate(60);
   
   playerSprites = new SpriteSheet("player.png", 15, 10);
-  playerSprites.align(CENTER, CENTER);
   
   testObj = new Entity(5, 6, 10, 10);
-  testObj.addComponent(new Rigidbody()); //<>//
-}
+  testObj.addComponent(new Rigidbody());
+} //<>//
 
 void draw() {
   test();

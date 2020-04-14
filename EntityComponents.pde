@@ -1,9 +1,19 @@
 abstract class EntityComponent {
   UUID id;
-  Entity entity;
+  protected Entity entity;
+  protected boolean enabled;
   
   EntityComponent(){
     id = UUID.randomUUID();
+    enabled = true;
+  }
+  
+  void enable(){
+    enabled = true; 
+  }
+  
+  void disable(){
+    enabled = false;
   }
   
   abstract void update();

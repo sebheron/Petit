@@ -8,11 +8,12 @@ class SpriteSheet {
   
   private int spriteIndex;
   
-  private float aX, aY;
+  private float oX, oY;
 
   SpriteSheet(String fileLocation, int _spriteWidth, int _spriteHeight) {
     spriteWidth = _spriteWidth;
     spriteHeight = _spriteHeight;
+    oX = oY = -0.5;
     
     PImage sheet = loadImage(fileLocation);
     int in = 0;
@@ -38,43 +39,22 @@ class SpriteSheet {
     return spriteHeight; 
   }
   
-  void align(int x){
-    if (x == RIGHT){
-      aX = 0;
-    }
-    else if (x == CENTER){
-      aX = -0.5;
-    }
-    else if (x == LEFT){
-      aX = -1;
-    }
-  }
-  
-  void align(int x, int y){
-    if (y == TOP){
-      aY = -1;
-    }
-    else if (y == CENTER){
-      aY = -0.5;
-    }
-    else if (y == BOTTOM){
-      aY = 0;
-    }
-    
-    align(x);
+  void offset(float x, float y){
+    oX = -0.5 + (x/2);
+    oY = -0.5 + (y/2);
   }
   
   void drawSprite(float x, float y){
-    image(sprites[spriteIndex], x + (aX * spriteWidth), y + (aY * spriteHeight));
+    image(sprites[spriteIndex], x + (oX * spriteWidth), y + (oY * spriteHeight));
   }
   
   void drawSprite(int index, float x, float y){
     spriteIndex = index;
-    image(sprites[spriteIndex], x + (aX * spriteWidth), y + (aY * spriteHeight));
+    image(sprites[spriteIndex], x + (oX * spriteWidth), y + (oY * spriteHeight));
   }
   
   void drawSprite(int index, float x, float y, float w, float h){
     spriteIndex = index;
-    image(sprites[spriteIndex], x + (aX * w), y + (aY * h), w , h);
+    image(sprites[spriteIndex], x + (oX * w), y + (oY * h), w , h);
   }
 }
