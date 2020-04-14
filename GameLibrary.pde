@@ -32,6 +32,6 @@ void test(){
   Entity e = new Entity(5, 6, 10, 10);
   
   SpriteSheet playerSprites = new SpriteSheet("player.png", 15, 10);
-  image(playerSprites.sprites[floor(frame) % playerSprites.count], width/2, height/2, 60, 40);
+  image(playerSprites.sprites[floor(frame) % playerSprites.spriteCount], width/2, height/2, 60, 40);
   frame += 0.01;
 }
