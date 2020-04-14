@@ -1,11 +1,3 @@
-static String Entity_Not_Referenced_Exception = "The EntityComponent (%s) is not attached to an Entity.";
-
-class EntityException extends Exception{
-  EntityException(String message){
-    super(message); 
-  }
-}
-
 abstract class EntityComponent {
   UUID id;
   Entity entity;
@@ -14,13 +6,7 @@ abstract class EntityComponent {
     id = UUID.randomUUID();
   }
   
-  void U() throws EntityException{
-    if (entity == null){
-      throw new EntityException(String.format(Entity_Not_Referenced_Exception, id));
-    }
-  }
-  
-  abstract void Update();
+  abstract void update();
 }
 
 class Rigidbody extends EntityComponent {
@@ -28,23 +14,23 @@ class Rigidbody extends EntityComponent {
   float angularVelocity;
   float mass;
   
-  void Update(){
+  void update(){
+    println("updating rigidbody!");
+  }
+  
+  void addForce(Vector2 force){
     
   }
   
-  void AddForce(Vector2 force){
+  void addForce(float x, float y){
     
   }
   
-  void AddForce(float x, float y){
-    
+  void addImpulseForce(Vector2 force){
+    velocity.addTo(force);
   }
   
-  void AddImpulseForce(Vector2 force){
-    velocity.AddTo(force);
-  }
-  
-  void AddImpulseForce(float x, float y){
+  void addImpulseForce(float x, float y){
     velocity.x += x;
     velocity.y += y;
   }

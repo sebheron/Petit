@@ -7,12 +7,12 @@ class Vector2{
     y = _y;
   }
   
-  void AddTo(Vector2 v2){
+  void addTo(Vector2 v2){
     x += v2.x;
     y += v2.y;
   }
   
-  Vector2 Add(Vector2 v2){
+  Vector2 add(Vector2 v2){
     return new Vector2(x + v2.x, y + v2.y);
   }
 }

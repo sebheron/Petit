@@ -1,23 +1,23 @@
 import ddf.minim.*;
 import java.util.*;
 
-boolean loading = true;
-
+Object world;
 Camera view;
 
-Object world;
+Entity testObj;
+
+SpriteSheet playerSprites;
 
 void setup() {
-  surface.setTitle("SQUIRREL!");
-  size(1200, 600);
+  size(500, 500);
   smooth(0);
-  frameRate(60); //<>//
-
-  // Create new world space.
-  world = new Object(0, 0, 8448, 2288);
+  frameRate(60);
   
-  // Create camera view.
-  view = new Camera();
+  playerSprites = new SpriteSheet("player.png", 15, 10);
+  playerSprites.align(CENTER, CENTER);
+  
+  testObj = new Entity(5, 6, 10, 10);
+  testObj.addComponent(new Rigidbody()); //<>// //<>//
 }
 
 void draw() {
@@ -28,10 +28,10 @@ float frame;
 
 void test(){
   background(150);
+  testObj.update();
   
-  Entity e = new Entity(5, 6, 10, 10);
+  rect(width/2 - 20, height/2 - 20, 40, 40);
+  playerSprites.drawSprite(floor(frame) % playerSprites.spriteCount, width/2, height/2, 60, 40);
   
-  SpriteSheet playerSprites = new SpriteSheet("player.png", 15, 10);
-  image(playerSprites.sprites[floor(frame) % playerSprites.spriteCount], width/2, height/2, 60, 40);
-  frame += 0.01;
+  frame += 0.1;
 }
