@@ -1,9 +1,11 @@
 class Entity extends Object {
   UUID id;
   private List<EntityComponent> components;
+  SpriteSheet spritesheet;
   
-  Entity(float _x, float _y, float _w, float _h){
+  Entity(float _x, float _y, float _w, float _h, SpriteSheet _spritesheet){
     super(_x, _y, _w, _h);
+    spritesheet = _spritesheet;
     id = UUID.randomUUID();
     components = new ArrayList<EntityComponent>();
   }

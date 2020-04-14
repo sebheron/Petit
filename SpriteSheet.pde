@@ -62,19 +62,13 @@ class SpriteSheet {
   }
   
   void drawSprite(String title, float x, float y){
-    for (int i = 0; i < names.length; i++){
-      if (names[i] == title){
-        image(sprites[i], x + (oX * spriteWidth), y + (oY * spriteHeight)); 
-      }
-    }
+    spriteIndex = titleToIndex(title);
+    image(sprites[spriteIndex], x + (oX * spriteWidth), y + (oY * spriteHeight)); 
   }
   
   void drawSprite(String title, float x, float y, float w, float h){
-    for (int i = 0; i < names.length; i++){
-      if (names[i] == title){
-        image(sprites[i], x + (oX * w), y + (oY * h), w, h); 
-      }
-    }
+    spriteIndex = titleToIndex(title);
+    image(sprites[spriteIndex], x + (oX * w), y + (oY * h), w, h); 
   }
   
   void titleSprite(int index, String title){
@@ -88,5 +82,29 @@ class SpriteSheet {
       title = String.format("%s %d", title, cc + 1);
     }
     names[index] = title;
+  }
+  
+  int titleToIndex(String title){
+    for (int i = 0; i < names.length; i++){
+      if (names[i] == title){
+        return i;
+      }
+    }
+    return -1;
+  }
+  
+  PImage getSprite(int index){
+    if (index > 0 & index < sprites.length){
+      return sprites[index];
+    }
+    return null;
+  }
+  
+  PImage getSprite(String title){
+    int index = titleToIndex(title);
+    if (index > 0 & index < sprites.length){
+      return sprites[index];
+    }
+    return null;
   }
 }

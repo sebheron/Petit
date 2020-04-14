@@ -23,7 +23,7 @@ abstract class EntityComponent {
 
 class Rigidbody extends EntityComponent {
   Vector2 velocity;
-  Float mass;
+  float mass = -1;
   float angularVelocity;
   
   Rigidbody(){
@@ -41,7 +41,7 @@ class Rigidbody extends EntityComponent {
   
   void setup(){
     velocity = new Vector2(0, 0);
-    if (mass == null){
+    if (mass < 0){
        mass = 1.0;
     }
   }
@@ -86,9 +86,9 @@ class Collider extends EntityComponent {
   }
   
   void setup(){
-    offset = new Vector2(0, 0);
+    offset = new Vector2();
     if (size == null){
-      size = new Vector2(0,0);
+      size = new Vector2();
     }
   }
 }
