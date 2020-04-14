@@ -1,7 +1,7 @@
-import java.util.*; //<>//
+import java.util.*; //<>// //<>//
 
-Object world;
-Camera view;
+World world;
+Camera camera;
 
 Entity obj1, obj2;
 
@@ -22,15 +22,17 @@ void setup() {
   boxSprites.titleSprite(0, "closed");
 
   obj1 = new Entity(0, height/2, 60, 40, playerSprites);
-  Physicsbody rb1 = new Physicsbody(10);
-  rb1.velocity = new PVector(-1, 0);
-  obj1.addComponent(rb1);
+  obj1.addComponent(new Physicsbody(10));
   obj1.addComponent(new Collider(35, 40));
 
   obj2 = new Entity(width/2, height/2, 30, 30, boxSprites);
-  Physicsbody rb2 = new Physicsbody(10);
-  obj2.addComponent(rb2);
+  obj2.addComponent(new Physicsbody(10));
   obj2.addComponent(new Collider(30, 30));
+  
+  world = new World(600, 600);
+  world.addEntity(obj1);
+  world.addEntity(obj2);
+  camera = new Camera(world);
 
   textSize(40);
   textAlign(LEFT, TOP);
@@ -52,43 +54,21 @@ void test() {
   obj1.CheckCollisions(obj2);
   //obj2.CheckCollisions
   
-  if (right)
+  if (KEY_RIGHT)
     obj1.physicsbody.addForce(1,0);
-  if (left)
+  if (KEY_LEFT)
     obj1.physicsbody.addForce(-1,0);
-  if (up)
+  if (KEY_UP)
     obj1.physicsbody.addForce(0,-1);
-  if (down)
+  if (KEY_DOWN)
     obj1.physicsbody.addForce(0,1);
 
   if (obj1.physicsbody.velocity.mag() > 0){
-    obj1.display(2 + ((frameCount / 20) % 2));
+    obj1.setSprite(2 + ((frameCount / 20) % 2));
   } else {
-    obj1.display("still");
+    obj1.setSprite("still");
   }
-  obj2.display("closed");
-}
-
-boolean up, down, left, right;
-
-void keyPressed() {
-  if (key == 'w')
-    up = true;
-  if (key == 's')
-    down = true;
-  if (key == 'a')
-    left = true;
-  if (key == 'd')
-    right = true;
-}
-
-void keyReleased() {
-  if (key == 'w')
-    up = false;
-  if (key == 's')
-    down = false;
-  if (key == 'a')
-    left = false;
-  if (key == 'd')
-    right = false;
+  obj2.setSprite("closed");
+  
+  world.display();
 }

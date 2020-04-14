@@ -47,32 +47,25 @@ class SpriteSheet {
     oY = -0.5 + (y/2);
   }
   
+  void setSprite(int index){
+    if (index >= 0 & index < sprites.length){
+      spriteIndex = index;
+    }
+  }
+  
+  void setSprite(String title){
+    int index = titleToIndex(title);
+    if (index >= 0 & index < sprites.length){
+      spriteIndex = index;
+    }
+  }
+  
   void drawSprite(float x, float y){
     image(sprites[spriteIndex], x + (oX * spriteWidth), y + (oY * spriteHeight));
   }
   
   void drawSprite(float x, float y, float w, float h){
-    image(sprites[spriteIndex], x + (oX * spriteWidth), y + (oY * spriteHeight));
-  }
-  
-  void drawSprite(int index, float x, float y){
-    spriteIndex = index;
-    image(sprites[spriteIndex], x + (oX * spriteWidth), y + (oY * spriteHeight));
-  }
-  
-  void drawSprite(int index, float x, float y, float w, float h){
-    spriteIndex = index;
-    image(sprites[spriteIndex], x + (oX * w), y + (oY * h), w , h);
-  }
-  
-  void drawSprite(String title, float x, float y){
-    spriteIndex = titleToIndex(title);
-    image(sprites[spriteIndex], x + (oX * spriteWidth), y + (oY * spriteHeight)); 
-  }
-  
-  void drawSprite(String title, float x, float y, float w, float h){
-    spriteIndex = titleToIndex(title);
-    image(sprites[spriteIndex], x + (oX * w), y + (oY * h), w, h); 
+    image(sprites[spriteIndex], x + (oX * w), y + (oY * h), w, h);
   }
   
   void titleSprite(int index, String title){

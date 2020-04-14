@@ -2,6 +2,7 @@ class Entity extends Object {
   UUID id;
   private List<EntityComponent> components;
 
+  int sprite;
   SpriteSheet spritesheet;
   Physicsbody physicsbody;
   Collider collider;
@@ -18,8 +19,8 @@ class Entity extends Object {
     components.add(eC);
     if (eC instanceof Physicsbody) {
       physicsbody = (Physicsbody)eC;
-    } else if (eC instanceof Collider){
-      collider = (Collider)eC; 
+    } else if (eC instanceof Collider) {
+      collider = (Collider)eC;
     }
   }
 
@@ -46,12 +47,16 @@ class Entity extends Object {
     return null;
   }
 
-  void display(String title) {
-    spritesheet.drawSprite(title, x, y, w, h);
+  void setSprite(int index) {
+    spritesheet.setSprite(index);
   }
 
-  void display(int index) {
-    spritesheet.drawSprite(index, x, y, w, h);
+  void setSprite(String title) {
+    spritesheet.setSprite(title);
+  }
+
+  void display(float camX, float camY) {
+    spritesheet.drawSprite(x + camX, y + camY, w, h);
   }
 
   void update() {
@@ -66,24 +71,6 @@ class Entity extends Object {
     }
     return new PVector();
   }
-
-  /*
-  boolean Intersects(Entity e) {
-   if (collider == null || e.collider == null){
-   return false;
-   }
-   
-   PVector max = new PVector(x + w + (-0.5 * w), y + h + (-0.5 * w));
-   PVector rMax = new PVector(e.x + e.w + (-0.5 * e.w), e.y + e.h + (-0.5 * e.h));
-   
-   if (max.x < e.x + (-0.5 * e.w) | x + (-0.5 * w) > rMax.x) {
-   return false;
-   }
-   if (max.y < e.y + (-0.5 * e.w) | y + (-0.5 * w) > rMax.y) {
-   return false;
-   }
-   return true;
-   }*/
 
   int CheckCollisions(Entity p2) {
     // Get the x and y distance between the objects.
