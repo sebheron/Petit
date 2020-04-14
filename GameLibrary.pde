@@ -3,10 +3,6 @@ import java.util.*;
 
 boolean loading = true;
 
-Player player;
-
-LevelManager level;
-
 Camera view;
 
 Object world;
@@ -15,19 +11,7 @@ void setup() {
   surface.setTitle("SQUIRREL!");
   size(1200, 600);
   smooth(0);
-  frameRate(60);
-  
-  // Load content from files.
-  LoadContent();
-
-  // Create new player object.
-  player = new Player(320, height/2, 50, 37.5, 91.25, 50); //<>//
-
-  // Create new level manager.
-  level = new LevelManager();
-  
-  //Load the first level.
-  level.loadLevel(levels[levelIndex]);
+  frameRate(60); //<>//
 
   // Create new world space.
   world = new Object(0, 0, 8448, 2288);
@@ -37,26 +21,17 @@ void setup() {
 }
 
 void draw() {
-  // Draw a particular scene according to the certain boolean variables.
-  if (loading) {
-    LoadingScene();
-  } else {
-    //GameScene(); 
-    test();
-  }
+  test();
 }
 
-int frame;
+float frame;
 
 void test(){
-  background(0);
-  Entity e = new Entity(5, 6, 10, 10, null, 0, 0);
-  GravityComponent g = new GravityComponent(e);
+  background(150);
   
-  e.x += 5;
+  Entity e = new Entity(5, 6, 10, 10);
   
-  SpriteSheet sheet = new SpriteSheet("spritesheet.png", 20, 60);
-  image(sheet.sprites[frame % sheet.count], width/2, height/2);
-  println(frame % sheet.count);
-  frame++;
+  SpriteSheet playerSprites = new SpriteSheet("player.png", 15, 10);
+  image(playerSprites.sprites[floor(frame) % playerSprites.count], width/2, height/2, 60, 40);
+  frame += 0.01;
 }
