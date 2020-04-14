@@ -12,8 +12,43 @@ class Vector2{
     y += v2.y;
   }
   
+  void addTo(Vector2Int v2){
+    x += v2.x;
+    y += v2.y;
+  }
+  
   Vector2 add(Vector2 v2){
     return new Vector2(x + v2.x, y + v2.y);
+  }
+  
+  Vector2 add(Vector2Int v2){
+    return new Vector2(x + v2.x, y + v2.y);
+  }
+  
+  Vector2 clone(){
+    return new Vector2(x, y); 
+  }
+}
+
+class Vector2Int{
+  int x, y;
+  
+  Vector2Int(int _x, int _y){
+    x = _x;
+    y = _y;
+  }
+  
+  void addTo(Vector2Int v2){
+    x += v2.x;
+    y += v2.y;
+  }
+  
+  Vector2Int add(Vector2Int v2){
+    return new Vector2Int(x + v2.x, y + v2.y);
+  }
+  
+  Vector2Int clone(){
+    return new Vector2Int(x, y); 
   }
 }
 
