@@ -72,7 +72,7 @@ class SpriteSheet {
   void drawSprite(String title, float x, float y, float w, float h){
     for (int i = 0; i < names.length; i++){
       if (names[i] == title){
-        image(sprites[i], x + (oX * w), y + (oY * h)); 
+        image(sprites[i], x + (oX * w), y + (oY * h), w, h); 
       }
     }
   }

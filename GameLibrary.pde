@@ -33,7 +33,7 @@ void test(){
   testObj.update();
   
   rect(width/2 - 20, height/2 - 20, 40, 40);
-  playerSprites.drawSprite(floor(frame) % 2 + 2, width/2, height/2, 60, 40);
+  playerSprites.drawSprite("still", width/2, height/2, 60, 40);
   
   frame += 0.1;
 }
