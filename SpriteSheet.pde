@@ -51,6 +51,10 @@ class SpriteSheet {
     image(sprites[spriteIndex], x + (oX * spriteWidth), y + (oY * spriteHeight));
   }
   
+  void drawSprite(float x, float y, float w, float h){
+    image(sprites[spriteIndex], x + (oX * spriteWidth), y + (oY * spriteHeight));
+  }
+  
   void drawSprite(int index, float x, float y){
     spriteIndex = index;
     image(sprites[spriteIndex], x + (oX * spriteWidth), y + (oY * spriteHeight));

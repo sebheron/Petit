@@ -1,7 +1,7 @@
 abstract class EntityComponent {
   UUID id;
-  protected Entity entity;
-  protected boolean enabled;
+  Entity entity;
+  boolean enabled;
   
   EntityComponent(){
     id = UUID.randomUUID();
@@ -17,78 +17,65 @@ abstract class EntityComponent {
   }
   
   abstract void update();
-  
-  abstract void setup();
 }
 
-class Rigidbody extends EntityComponent {
-  Vector2 velocity;
-  float mass = -1;
-  float angularVelocity;
+class Physicsbody extends EntityComponent {
+  PVector velocity = new PVector();
+  PVector acceleration = new PVector();
+  float drag = 0.9;
   
-  Rigidbody(){
+  Physicsbody(){
     super(); 
   }
   
-  Rigidbody(float _mass){
+  Physicsbody(float _drag){
     super();
-    mass = _mass;
+    drag = _drag;
   }
   
   void update(){
-    println("updating rigidbody!");
+    velocity.add(acceleration);
+    entity.x += velocity.x;
+    entity.y += velocity.y;
+    velocity.mult(1/drag);
+    acceleration = new PVector();
   }
   
-  void setup(){
-    velocity = new Vector2(0, 0);
-    if (mass < 0){
-       mass = 1.0;
-    }
-  }
-  
-  void addForce(Vector2 force){
-    
+  void addForce(PVector force){
+    acceleration.add(force);
   }
   
   void addForce(float x, float y){
-    
+    acceleration.add(new PVector(x, y));
   }
   
-  void addImpulseForce(Vector2 force){
-    velocity.addTo(force);
+  /*void addImpulseForce(PVector force){
+    velocity.add(force);
   }
   
   void addImpulseForce(float x, float y){
     velocity.x += x;
     velocity.y += y;
-  }
+  }*/
 }
 
 class Collider extends EntityComponent {
-  Vector2 size;
-  Vector2 offset;
-  
-  Collider(){
-    super(); 
-  }
+  PVector size;
+  PVector halfSize;
+  PVector offset;
   
   Collider(float x, float y){
     super();
-    size = new Vector2(x, y);
+    size = new PVector(x, y);
+    halfSize = new PVector(x/2, y/2);
   }
   
-  Collider(Vector2 _size){
-    size = _size.clone(); 
+  Collider(PVector _size){
+    size = _size.copy(); 
+    size = new PVector(_size.x/2, _size.y/2);
   }
   
   void update(){
-    println("updating collider!");
-  }
-  
-  void setup(){
-    offset = new Vector2();
-    if (size == null){
-      size = new Vector2();
-    }
+    
   }
 }
