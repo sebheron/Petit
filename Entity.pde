@@ -10,6 +10,7 @@ class Entity extends Object {
   
   void addComponent(EntityComponent eC){
     eC.entity = this;
+    eC.setup();
     components.add(eC);
   }
   
@@ -19,6 +20,15 @@ class Entity extends Object {
   
   void removeComponent(EntityComponent eC){
     components.remove(eC);
+  }
+  
+  EntityComponent getComponent(Class type){
+    for (EntityComponent eC : components){
+      if (type.isInstance(eC)){
+        return eC;
+      }
+    }
+    return null;
   }
   
   void display(){
