@@ -17,7 +17,7 @@ void setup() {
   playerSprites.align(CENTER, CENTER);
   
   testObj = new Entity(5, 6, 10, 10);
-  testObj.addComponent(new Rigidbody()); //<>// //<>//
+  testObj.addComponent(new Rigidbody()); //<>//
 }
 
 void draw() {

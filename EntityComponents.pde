@@ -16,7 +16,12 @@ class Rigidbody extends EntityComponent {
   Float mass;
   float angularVelocity;
   
+  Rigidbody(){
+    super(); 
+  }
+  
   Rigidbody(float _mass){
+    super();
     mass = _mass;
   }
   
@@ -53,7 +58,12 @@ class Collider extends EntityComponent {
   Vector2 size;
   Vector2 offset;
   
+  Collider(){
+    super(); 
+  }
+  
   Collider(float x, float y){
+    super();
     size = new Vector2(x, y);
   }
   
