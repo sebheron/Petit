@@ -31,7 +31,6 @@ class World extends Object {
           }
         }
       }
-      print(e1.physicsbody != null && e1.physicsbody.grounded);
     }
   }
 

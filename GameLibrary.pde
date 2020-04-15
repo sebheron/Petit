@@ -1,4 +1,4 @@
-import java.util.*; //<>// //<>// //<>//
+import java.util.*;
 
 World world;
 Camera camera;
@@ -71,10 +71,10 @@ void draw() {
 float frame;
 
 void test() {
-  background(150);
+  background(255);
   textSize(30);
   fill(255);
-  text(player.physicsbody.velocity.mag(), 30, 30);
+  text(frameRate, 30, 30);
 
   world.update();
   
@@ -82,7 +82,6 @@ void test() {
     player.physicsbody.addForce(1,0);
   if (KEY_LEFT)
     player.physicsbody.addForce(-1,0);
-  println(player.collider.collisionSide == BOTTOM);
   if (KEY_UP && player.physicsbody.grounded)
     player.physicsbody.addImpulseForce(0,-15);
   if (KEY_DOWN)
