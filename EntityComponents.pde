@@ -20,10 +20,10 @@ abstract class EntityComponent {
 }
 
 class Physicsbody extends EntityComponent {
-  PVector velocity = new PVector();
-  PVector acceleration = new PVector();
+  PVector velocity = new PVector(0,0);
+  PVector acceleration = new PVector(0,0);
   float drag = 10;
-  boolean locked;
+  boolean locked, grounded;
   boolean awakeX, awakeY;
 
   Physicsbody() {
@@ -42,7 +42,9 @@ class Physicsbody extends EntityComponent {
       entity.x += velocity.x;
       entity.y += velocity.y;
       velocity.mult(1/drag);
-      velocity.y += 3;
+      
+      velocity.x *= 0.9;
+      velocity.y += 0.8;
       if (abs(velocity.y) < 0.01) {
         velocity.y = 0;
       }

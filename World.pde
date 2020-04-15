@@ -2,7 +2,6 @@ class World extends Object {
 
   List<Entity> entities;
   float camX, camY;
-  boolean useBorders;
 
   World() {
     super(0, 0, width, height); 
@@ -20,12 +19,19 @@ class World extends Object {
 
   void update() {
     for (Entity e1 : entities){
+      if (e1.physicsbody != null){
+        e1.physicsbody.grounded = false;
+      }
       e1.update();
       for (Entity e2 : entities){
         if (e1.id != e2.id){
           e1.setCollisionSide(CheckCollisions(e1, e2));
+          if (e1.collider != null && e1.physicsbody != null && e1.collider.collisionSide == BOTTOM){
+            e1.physicsbody.grounded = true;
+          }
         }
       }
+      print(e1.physicsbody != null && e1.physicsbody.grounded);
     }
   }
 
@@ -59,20 +65,26 @@ class World extends Object {
         // Perform checks to determine where collision occured.
         if (overlapX >= overlapY) {
           if (distanceY > 0) {
-            e1.physicsbody.addImpulseForce(0, overlapY);
+            e1.y += overlapY * 0.1;
+            e1.physicsbody.velocity.y = 0;
+            //e1.physicsbody.addImpulseForce(0, overlapY);
             return TOP;
           } else {
-            e1.y -= overlapY;
+            e1.y -= overlapY * 0.1;
             e1.physicsbody.velocity.y = 0;
             //e1.physicsbody.addImpulseForce(0, -overlapY);
             return BOTTOM;
           }
         } else {
           if (distanceX > 0) {
-            e1.physicsbody.addImpulseForce(overlapX, 0);
+            e1.x += overlapX * 0.1;
+            e1.physicsbody.velocity.x = 0;
+            //e1.physicsbody.addImpulseForce(overlapX, 0);
             return LEFT;
           } else {
-            e1.physicsbody.addImpulseForce(-overlapX, 0);
+            e1.x -= overlapX * 0.1;
+            e1.physicsbody.velocity.x = 0;
+            //e1.physicsbody.addImpulseForce(-overlapX, 0);
             return RIGHT;
           }
         }
