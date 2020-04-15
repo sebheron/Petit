@@ -6,6 +6,7 @@ class Entity extends Object {
   SpriteSheet spritesheet;
   Physicsbody physicsbody;
   Collider collider;
+  CollisionMask mask;
 
   Entity(float _x, float _y, float _w, float _h, SpriteSheet _spritesheet) {
     super(_x, _y, _w, _h);
@@ -21,12 +22,19 @@ class Entity extends Object {
       physicsbody = (Physicsbody)eC;
     } else if (eC instanceof Collider) {
       collider = (Collider)eC;
+    } else if (eC instanceof CollisionMask){
+      mask = (CollisionMask)eC;
     }
   }
 
   void removeComponent(int index) {
-    if (components.get(index) instanceof Physicsbody) {
+    EntityComponent eC = components.get(index);
+    if (eC instanceof Physicsbody) {
       physicsbody = null;
+    } else if (eC instanceof Physicsbody) {
+      collider = null;
+    } else if (eC instanceof CollisionMask){
+      mask = null;
     }
     components.remove(index);
   }
@@ -35,6 +43,10 @@ class Entity extends Object {
     components.remove(eC);
     if (eC instanceof Physicsbody) {
       physicsbody = null;
+    } else if (eC instanceof Physicsbody) {
+      collider = null;
+    } else if (eC instanceof CollisionMask){
+      mask = null;
     }
   }
 

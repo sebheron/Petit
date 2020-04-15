@@ -20,20 +20,23 @@ abstract class EntityComponent {
 }
 
 class Physicsbody extends EntityComponent {
-  PVector velocity = new PVector(0,0);
-  PVector acceleration = new PVector(0,0);
-  float drag = 10;
+  PVector velocity, acceleration;
+  float drag;
   boolean locked, grounded;
-  boolean awakeX, awakeY;
 
   Physicsbody() {
     super();
+    drag = 10;
+    velocity = new PVector(0,0);
+    acceleration = new PVector(0,0);
   }
 
   Physicsbody(float _drag, boolean _locked) {
     super();
     drag = _drag;
     locked = _locked;
+    velocity = new PVector(0, 0);
+    acceleration = new PVector(0, 0);
   }
 
   void update() {
@@ -43,77 +46,80 @@ class Physicsbody extends EntityComponent {
       entity.y += velocity.y;
       velocity.mult(1/drag);
       
-      velocity.x *= 0.9;
-      velocity.y += 0.8;
-      if (abs(velocity.y) < 0.01) {
-        velocity.y = 0;
-      }
-      if (abs(velocity.x) < 0.01) {
-        velocity.x = 0;
-      }
+      velocity.x *= FRICTION;
+      velocity.y += GRAVITY;
+      
+      zeroLowVelX();
     }
-    acceleration = new PVector();
+    acceleration = new PVector(0, 0);
   }
 
   void addForce(PVector force) {
-    if (abs(force.y) < 0.01) {
-      force.y = 0;
-    }
-    if (abs(force.x) < 0.01) {
-      force.x = 0;
-    }
     acceleration.add(force);
   }
 
   void addForce(float x, float y) {
-    if (abs(y) < 0.01) {
-      y = 0;
-    }
-    if (abs(x) < 0.01) {
-      x = 0;
-    }
     acceleration.add(new PVector(x, y));
   }
 
   void addImpulseForce(PVector force) {
-    if (abs(force.y) < 0.01) {
-      force.y = 0;
-    }
-    if (abs(force.x) < 0.01) {
-      force.x = 0;
-    }
     velocity.add(force);
   }
 
   void addImpulseForce(float x, float y) {
-    if (abs(y) < 0.01) {
-      y = 0;
-    }
-    if (abs(x) < 0.01) {
-      x = 0;
-    }
     velocity.x += x;
     velocity.y += y;
+  }
+  
+  void zeroLowVelX(){
+    if (abs(velocity.x) < 0.01){
+      velocity.x = 0;
+    }
   }
 }
 
 class Collider extends EntityComponent {
-  PVector size;
-  PVector halfSize;
-  PVector offset;
+  PVector size, halfSize;
   int collisionSide;
+  float material;
+  int layer;
 
-  Collider(float x, float y) {
+  Collider(float x, float y, float _material, int _layer) {
     super();
     size = new PVector(x, y);
     halfSize = new PVector(x/2, y/2);
+    material = _material;
+    layer = _layer;
   }
 
-  Collider(PVector _size) {
+  Collider(PVector _size, float _material) {
     size = _size.copy(); 
-    size = new PVector(_size.x/2, _size.y/2);
+    halfSize = new PVector(_size.x/2, _size.y/2);
+    material = _material;
   }
 
-  void update() {
+  void update() {}
+}
+
+class CollisionMask extends EntityComponent {
+  List<Integer> layers;
+  
+  CollisionMask(int ... _layers){
+    layers = new ArrayList();
+    for (int layer : _layers){
+      layers.add(layer); 
+    }
   }
+  
+  void add(int layer){
+    if (!layers.contains(layer)){
+      layers.add(layer);
+    }
+  }
+  
+  boolean contains(int layer){
+    return layers.contains(layer); 
+  }
+  
+  void update() {}
 }

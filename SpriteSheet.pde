@@ -79,6 +79,10 @@ class SpriteSheet {
     image(sprites[spriteIndex], x + (oX * w), y + (oY * h), w, h);
   }
   
+  void animateSprite(int frames){
+    
+  }
+  
   void titleSprite(int index, String title){
     int cc = 0;
     for (int i = 0; i < names.length; i++){
