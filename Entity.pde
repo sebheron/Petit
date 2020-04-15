@@ -54,15 +54,22 @@ class Entity extends Object {
   void setSprite(String title) {
     spritesheet.setSprite(title);
   }
+  
+  void setCollisionSide(int collision){
+    if (collider != null){
+      collider.collisionSide = collision;
+    }
+  }
 
   void display(float camX, float camY) {
-    spritesheet.drawSprite(x + camX, y + camY, w, h);
+    spritesheet.drawSprite(x - camX, y - camY, w, h);
   }
 
   void update() {
     for (EntityComponent eC : components) {
       eC.update();
     }
+    println("UPDATING");
   }
 
   PVector getVelocity() {
@@ -70,44 +77,5 @@ class Entity extends Object {
       return physicsbody.velocity.copy();
     }
     return new PVector();
-  }
-
-  int CheckCollisions(Entity p2) {
-    // Get the x and y distance between the objects.
-    float distanceX = x - p2.x;
-    float distanceY = y - p2.y;
-
-    // Get the half widths combined and half heights combined.
-    float bothHalfWidths = collider.halfSize.x + p2.collider.halfSize.x;
-    float bothHalfHeights = collider.halfSize.y + p2.collider.halfSize.y;
-
-    // Check if either the x and y overlap.
-    if (abs(distanceX) < bothHalfWidths) {
-      if (abs(distanceY) < bothHalfHeights) {
-        float overlapX = bothHalfWidths - abs(distanceX);
-        float overlapY = bothHalfHeights - abs(distanceY);
-
-        // Perform checks to determine where collision occured.
-        if (overlapX >= overlapY) {
-          if (distanceY > 0) {
-            y += overlapY;
-            return TOP;
-          } else {
-            y -= overlapY;
-            return BOTTOM;
-          }
-        } else {
-          if (distanceX > 0) {
-            x += overlapX;
-            return LEFT;
-          } else {
-            x -= overlapX;
-            return RIGHT;
-          }
-        }
-      }
-    }
-
-    return 0;
   }
 }

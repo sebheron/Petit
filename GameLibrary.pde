@@ -1,11 +1,11 @@
-import java.util.*; //<>// //<>//
+import java.util.*; //<>//
 
 World world;
 Camera camera;
 
-Entity obj1, obj2;
+Entity player, obj2, obj3, obj4, platform1, platform2;
 
-SpriteSheet playerSprites, boxSprites;
+SpriteSheet playerSprites, boxSprites, groundSprites;
 
 void setup() {
   size(500, 500);
@@ -20,19 +20,43 @@ void setup() {
 
   boxSprites = new SpriteSheet("box.png", 10, 10);
   boxSprites.titleSprite(0, "closed");
+  boxSprites.titleSprite(1, "broken");
+  
+  groundSprites = new SpriteSheet("platform.png", 30, 10);
+  boxSprites.titleSprite(0, "platform");
 
-  obj1 = new Entity(0, height/2, 60, 40, playerSprites);
-  obj1.addComponent(new Physicsbody(10));
-  obj1.addComponent(new Collider(35, 40));
+  player = new Entity(width/2, height/2 + 90, 60, 40, playerSprites);
+  player.addComponent(new Physicsbody());
+  player.addComponent(new Collider(35, 40));
 
-  obj2 = new Entity(width/2, height/2, 30, 30, boxSprites);
-  obj2.addComponent(new Physicsbody(10));
+  obj2 = new Entity(width/2 + 30, height/2, 30, 30, boxSprites);
+  obj2.addComponent(new Physicsbody());
   obj2.addComponent(new Collider(30, 30));
   
+  obj3 = new Entity(width/2 + 30, height/2 + 30, 30, 30, boxSprites.copy());
+  obj3.addComponent(new Physicsbody());
+  obj3.addComponent(new Collider(30, 30));
+  
+  obj4 = new Entity(width/2 + 30, height/2 + 60, 30, 30, boxSprites.copy());
+  obj4.addComponent(new Physicsbody());
+  obj4.addComponent(new Collider(30, 30));
+  
+  platform1 = new Entity(width/2, height/2 + 120, 90, 30, groundSprites);
+  platform1.addComponent(new Collider(90, 30));
+
+  
   world = new World(600, 600);
-  world.addEntity(obj1);
+  world.useBorders = true;
+  world.addEntity(player);
   world.addEntity(obj2);
+  world.addEntity(obj3);
+  world.addEntity(obj4);
+  world.addEntity(platform1);
   camera = new Camera(world);
+  
+  obj2.setSprite("closed");
+  obj3.setSprite("broken");
+  obj4.setSprite("closed");
 
   textSize(40);
   textAlign(LEFT, TOP);
@@ -46,29 +70,27 @@ float frame;
 
 void test() {
   background(150);
+  textSize(30);
+  fill(255);
+  text(frameRate, 30, 30);
 
-  obj1.update();
-  obj2.update();
-  
-  obj2.CheckCollisions(obj1);
-  obj1.CheckCollisions(obj2);
-  //obj2.CheckCollisions
+  world.update();
   
   if (KEY_RIGHT)
-    obj1.physicsbody.addForce(1,0);
+    player.physicsbody.addForce(1,0);
   if (KEY_LEFT)
-    obj1.physicsbody.addForce(-1,0);
+    player.physicsbody.addForce(-1,0);
   if (KEY_UP)
-    obj1.physicsbody.addForce(0,-1);
+    player.physicsbody.addForce(0,-1);
   if (KEY_DOWN)
-    obj1.physicsbody.addForce(0,1);
+    player.physicsbody.addForce(0,1);
 
-  if (obj1.physicsbody.velocity.mag() > 0){
-    obj1.setSprite(2 + ((frameCount / 20) % 2));
+  if (player.physicsbody.velocity.mag() > 0){
+    player.setSprite(2 + ((frameCount / 20) % 2));
   } else {
-    obj1.setSprite("still");
+    player.setSprite("still");
   }
-  obj2.setSprite("closed");
   
+  camera.update(player);
   world.display();
 }

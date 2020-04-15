@@ -11,6 +11,17 @@ class SpriteSheet {
   private int spriteIndex;
   
   private float oX, oY;
+  
+  SpriteSheet(PImage[] _sprites, String[] _names, int _spriteCount, int _spriteWidth, int _spriteHeight, int _spriteIndex, float _oX, float _oY){
+    sprites = _sprites;
+    names = _names;
+    spriteCount = _spriteCount;
+    spriteWidth = _spriteWidth;
+    spriteHeight = _spriteHeight;
+    spriteIndex = _spriteIndex;
+    oX = _oX;
+    oY = _oY;
+  }
 
   SpriteSheet(String fileLocation, int _spriteWidth, int _spriteHeight) {
     spriteWidth = _spriteWidth;
@@ -103,5 +114,10 @@ class SpriteSheet {
       return sprites[index];
     }
     return null;
+  }
+  
+  //Just a shallow copy!
+  SpriteSheet copy(){
+    return new SpriteSheet(sprites, names, spriteCount, spriteWidth, spriteHeight, spriteIndex, oX, oY);
   }
 }
