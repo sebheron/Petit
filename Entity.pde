@@ -69,7 +69,6 @@ class Entity extends Object {
     for (EntityComponent eC : components) {
       eC.update();
     }
-    println("UPDATING");
   }
 
   PVector getVelocity() {

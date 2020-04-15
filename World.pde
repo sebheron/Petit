@@ -20,13 +20,12 @@ class World extends Object {
 
   void update() {
     for (Entity e1 : entities){
+      e1.update();
       for (Entity e2 : entities){
         if (e1.id != e2.id){
           e1.setCollisionSide(CheckCollisions(e1, e2));
         }
       }
-
-      e1.update();
     }
   }
 
@@ -65,6 +64,7 @@ class World extends Object {
           } else {
             e1.y -= overlapY;
             e1.physicsbody.velocity.y = 0;
+            //e1.physicsbody.addImpulseForce(0, -overlapY);
             return BOTTOM;
           }
         } else {

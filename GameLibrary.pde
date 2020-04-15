@@ -7,6 +7,8 @@ Entity player, obj2, obj3, obj4, platform1, platform2;
 
 SpriteSheet playerSprites, boxSprites, groundSprites;
 
+float delta, lastTime;
+
 void setup() {
   size(500, 500);
   smooth(0);
@@ -69,10 +71,11 @@ void draw() {
 float frame;
 
 void test() {
+  delta = millis() - lastTime;
   background(150);
   textSize(30);
   fill(255);
-  text(frameRate, 30, 30);
+  text(delta, 30, 30);
 
   world.update();
   
@@ -93,4 +96,5 @@ void test() {
   
   camera.update(player);
   world.display();
+  lastTime = millis();
 }
