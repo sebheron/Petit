@@ -1,5 +1,12 @@
-float GRAVITY = 0.8;
+PVector GRAVITY = new PVector(0, 0.8);
 float FRICTION = 0.9;
+
+PVector COLLISION_TOP = new PVector(0, -1);
+PVector COLLISION_BOTTOM = new PVector(0, 1);
+PVector COLLISION_LEFT = new PVector(-1, 0);
+PVector COLLISION_RIGHT = new PVector(1, 0);
+
+PVector COLLISION_NONE = new PVector(0, 0);
 
 class World extends Object {
 
@@ -29,9 +36,9 @@ class World extends Object {
       for (Entity e2 : entities){
         if (e1.id != e2.id){
           e1.setCollisionSide(CheckCollisions(e1, e2));
-          if (e1.collider != null && e1.physicsbody != null && e1.collider.collisionSide == BOTTOM){
-            e1.physicsbody.grounded = true;
           }
+          if (e1.collider != null && e1.physicsbody != null && e1.collider.collisionSide.equals(GRAVITY.normalize())){
+            e1.physicsbody.grounded = true;
         }
       }
     }
@@ -43,14 +50,14 @@ class World extends Object {
     }
   }
 
-  int CheckCollisions(Entity e1, Entity e2) {
+  PVector CheckCollisions(Entity e1, Entity e2) {
     if (!e1.enabled || e1.collider == null || !e1.collider.enabled
      || !e2.enabled || e2.collider == null || !e2.collider.enabled
      || !e1.collider.collisionOn
      || (e1.physicsbody != null && e1.physicsbody.locked)
      || (e1.mask != null && !e1.mask.contains(e2.collider.layer))
      || (e2.mask != null && !e2.mask.contains(e1.collider.layer))){
-      return 0;
+      return COLLISION_NONE;
     }
     
     // Get the x and y distance between the objects.
@@ -73,35 +80,40 @@ class World extends Object {
         if (overlapX >= overlapY) {
           if (distanceY > 0) {
             if (e1.physicsbody != null){
-              e1.physicsbody.addImpulseForce(0, overlapY);
+              e1.y += overlapY * (0.1 + bothMaterials);
+              if (e1.physicsbody.velocity.y < 0)
+                e1.physicsbody.velocity.y = -e1.physicsbody.velocity.y * bothMaterials;
             }
-            return TOP;
+            return COLLISION_TOP;
           } else {
             if (e1.physicsbody != null){
               e1.y -= overlapY * (0.1 + bothMaterials);
-              e1.physicsbody.velocity.y = -e1.physicsbody.velocity.y * bothMaterials;
+              if (e1.physicsbody.velocity.y > 0)
+                e1.physicsbody.velocity.y = -e1.physicsbody.velocity.y * bothMaterials;
             }
-            return BOTTOM;
+            return COLLISION_BOTTOM;
           }
         } else {
           if (distanceX > 0) {
             if (e1.physicsbody != null){
               e1.x += overlapX * (0.1 + bothMaterials);
-              e1.physicsbody.velocity.x = -e1.physicsbody.velocity.x * bothMaterials;
+              if (e1.physicsbody.velocity.x < 0 || e2.physicsbody == null)
+                e1.physicsbody.velocity.x = -e1.physicsbody.velocity.x * bothMaterials;
             }
-            return LEFT;
+            return COLLISION_LEFT;
           } else {
             if (e1.physicsbody != null){
               e1.x -= overlapX * (0.1 + bothMaterials);
-              e1.physicsbody.velocity.x = -e1.physicsbody.velocity.x * bothMaterials;
+              if (e1.physicsbody.velocity.x > 0 || e2.physicsbody == null)
+                e1.physicsbody.velocity.x = -e1.physicsbody.velocity.x * bothMaterials;
             }
-            return RIGHT;
+            return COLLISION_RIGHT;
           }
         }
       }
     }
 
-    return 0;
+    return COLLISION_NONE;
   }
 }
 

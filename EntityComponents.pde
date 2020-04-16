@@ -44,10 +44,10 @@ class Physicsbody extends EntityComponent {
       velocity.add(acceleration);
       entity.x += velocity.x;
       entity.y += velocity.y;
-      velocity.mult(1/drag);
       
+      velocity.mult(1/drag);
       velocity.x *= FRICTION;
-      velocity.y += GRAVITY;
+      velocity.add(GRAVITY);
       
       zeroLowVelX();
     }
@@ -79,8 +79,8 @@ class Physicsbody extends EntityComponent {
 }
 
 class Collider extends EntityComponent {
-  PVector size, halfSize;
-  int collisionSide, layer;
+  PVector size, halfSize, collisionSide;
+  int layer;
   float material;
   boolean collisionOn;
 
@@ -88,6 +88,7 @@ class Collider extends EntityComponent {
     super();
     size = new PVector(x, y);
     halfSize = new PVector(x/2, y/2);
+    collisionSide = COLLISION_NONE;
     material = _material;
     collisionOn = true;
   }

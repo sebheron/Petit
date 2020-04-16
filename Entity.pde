@@ -67,7 +67,7 @@ class Entity extends Object {
     spritesheet.setSprite(title);
   }
   
-  void setCollisionSide(int collision){
+  void setCollisionSide(PVector collision){
     if (collider != null){
       collider.collisionSide = collision;
     }
