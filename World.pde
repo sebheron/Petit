@@ -46,6 +46,7 @@ class World extends Object {
   int CheckCollisions(Entity e1, Entity e2) {
     if (!e1.enabled || e1.collider == null || !e1.collider.enabled
      || !e2.enabled || e2.collider == null || !e2.collider.enabled
+     || !e1.collider.collisionOn
      || (e1.physicsbody != null && e1.physicsbody.locked)
      || (e1.mask != null && !e1.mask.contains(e2.collider.layer))
      || (e2.mask != null && !e2.mask.contains(e1.collider.layer))){

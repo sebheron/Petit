@@ -80,22 +80,23 @@ class Physicsbody extends EntityComponent {
 
 class Collider extends EntityComponent {
   PVector size, halfSize;
-  int collisionSide;
+  int collisionSide, layer;
   float material;
-  int layer;
+  boolean collisionOn;
 
-  Collider(float x, float y, float _material, int _layer) {
+  Collider(float x, float y, float _material) {
     super();
     size = new PVector(x, y);
     halfSize = new PVector(x/2, y/2);
     material = _material;
-    layer = _layer;
+    collisionOn = true;
   }
 
   Collider(PVector _size, float _material) {
     size = _size.copy(); 
     halfSize = new PVector(_size.x/2, _size.y/2);
     material = _material;
+    collisionOn = true;
   }
 
   void update() {}

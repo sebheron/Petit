@@ -3,7 +3,7 @@ import java.util.*;
 World world;
 Camera camera;
 
-Entity player, obj2, obj3, obj4, spring;
+Entity player, crate, brokenCrate, brick, spring;
 Entity[] platforms;
 
 SpriteSheet playerSprites, boxSprites, groundSprites, springSprites;
@@ -35,23 +35,25 @@ void setup() {
   
   springSprites = new SpriteSheet("spring.png", 10, 10);
 
-  obj2 = new Entity(width/2 + 30, height/2, 30, 30, boxSprites);
-  obj2.addComponent(new Physicsbody(1.1, false));
-  obj2.addComponent(new Collider(30, 30, 0, 0));
-  world.addEntity(obj2);
+  crate = new Entity(width/2 + 30, height/2, 30, 30, boxSprites);
+  crate.addComponent(new Physicsbody(1.1, false));
+  crate.addComponent(new Collider(30, 30, 0));
+  world.addEntity(crate);
   
-  obj3 = new Entity(width/2 + 30, height/2 + 30, 30, 30, boxSprites.copy());
-  obj3.addComponent(new Physicsbody(1.1, false));
-  obj3.addComponent(new Collider(30, 30, 0, 0));
-  world.addEntity(obj3);
+  brokenCrate = new Entity(width/2 + 30, height/2 + 30, 30, 30, boxSprites.copy());
+  brokenCrate.addComponent(new Physicsbody(1.1, false));
+  brokenCrate.addComponent(new Collider(30, 30, 0));
+  world.addEntity(brokenCrate);
   
-  obj4 = new Entity(width/2 + 65, height/2 + 60, 30, 30, boxSprites.copy());
-  obj4.addComponent(new Physicsbody(1.1, false));
-  obj4.addComponent(new Collider(30, 30, 2, 1));
-  world.addEntity(obj4);
+  brick = new Entity(width/2 + 65, height/2 + 60, 30, 30, boxSprites.copy());
+  brick.addComponent(new Physicsbody(1.1, false));
+  Collider brickCollider = new Collider(30, 30, 2);
+  brickCollider.layer = 1;
+  brick.addComponent(brickCollider);
+  world.addEntity(brick);
   
   spring = new Entity(90, height/2 + 90, 30, 30, springSprites);
-  spring.addComponent(new Collider(30, 30, 3, 0));
+  spring.addComponent(new Collider(30, 30, 3));
   world.addEntity(spring);
   
   camera = new Camera(world);
@@ -59,19 +61,20 @@ void setup() {
   platforms = new Entity[5];
   for (int i = 0; i < 5; i++){
     platforms[i] = new Entity(100 * i + 90, height/2 + 120, 90, 30, groundSprites.copy());
-    platforms[i].addComponent(new Collider(90, 30, 0, 0));
+    Collider platformCollider = new Collider(90, 30, 0);
+    platforms[i].addComponent(platformCollider);
     platforms[i].setSprite("untouched");
     world.addEntity(platforms[i]);
   }
   
   player = new Entity(startPos.x, startPos.y, 60, 40, playerSprites);
   player.addComponent(new Physicsbody(1.1, false));
-  player.addComponent(new Collider(35, 40, 0, 0));
+  player.addComponent(new Collider(35, 40, 0));
   player.addComponent(new CollisionMask(0));
   world.addEntity(player);
   
-  obj2.setSprite("closed");
-  obj3.setSprite("broken");
+  crate.setSprite("closed");
+  brokenCrate.setSprite("broken");
 
   textSize(40);
   textAlign(LEFT, TOP);
