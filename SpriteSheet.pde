@@ -27,7 +27,6 @@ class SpriteSheet {
     spriteWidth = _spriteWidth;
     spriteHeight = _spriteHeight;
     oX = oY = -0.5;
-    
     PImage sheet = loadImage(fileLocation);
     int in = 0;
     spriteCount = (sheet.width / _spriteWidth) * (sheet.height / _spriteHeight);
@@ -79,26 +78,17 @@ class SpriteSheet {
     image(sprites[spriteIndex], x + (oX * w), y + (oY * h), w, h);
   }
   
-  void animateSprite(int frames){
+  void animateSprite(){
     
   }
   
   void titleSprite(int index, String title){
-    int cc = 0;
-    for (int i = 0; i < names.length; i++){
-      if (names[i] != null && names[i].contains(title)){
-        cc++;
-      }
-    }
-    if (cc > 0){
-      title = String.format("%s %d", title, cc + 1);
-    }
     names[index] = title;
   }
   
   int titleToIndex(String title){
     for (int i = 0; i < names.length; i++){
-      if (names[i] == title){
+      if (names[i].equals(title)){
         return i;
       }
     }

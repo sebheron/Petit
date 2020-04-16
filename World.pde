@@ -46,7 +46,7 @@ class World extends Object {
   int CheckCollisions(Entity e1, Entity e2) {
     if (!e1.enabled || e1.collider == null || !e1.collider.enabled
      || !e2.enabled || e2.collider == null || !e2.collider.enabled
-     || e1.physicsbody == null || e1.physicsbody.locked
+     || (e1.physicsbody != null && e1.physicsbody.locked)
      || (e1.mask != null && !e1.mask.contains(e2.collider.layer))
      || (e2.mask != null && !e2.mask.contains(e1.collider.layer))){
       return 0;
@@ -71,21 +71,29 @@ class World extends Object {
         // Perform checks to determine where collision occured.
         if (overlapX >= overlapY) {
           if (distanceY > 0) {
-            e1.physicsbody.addImpulseForce(0, overlapY);
+            if (e1.physicsbody != null){
+              e1.physicsbody.addImpulseForce(0, overlapY);
+            }
             return TOP;
           } else {
-            e1.y -= overlapY * (0.1 + bothMaterials);
-            e1.physicsbody.velocity.y = -e1.physicsbody.velocity.y * bothMaterials;
+            if (e1.physicsbody != null){
+              e1.y -= overlapY * (0.1 + bothMaterials);
+              e1.physicsbody.velocity.y = -e1.physicsbody.velocity.y * bothMaterials;
+            }
             return BOTTOM;
           }
         } else {
           if (distanceX > 0) {
-            e1.x += overlapX * (0.1 + bothMaterials);
-            e1.physicsbody.velocity.x = -e1.physicsbody.velocity.x * bothMaterials;
+            if (e1.physicsbody != null){
+              e1.x += overlapX * (0.1 + bothMaterials);
+              e1.physicsbody.velocity.x = -e1.physicsbody.velocity.x * bothMaterials;
+            }
             return LEFT;
           } else {
-            e1.x -= overlapX * (0.1 + bothMaterials);
-            e1.physicsbody.velocity.x = -e1.physicsbody.velocity.x * bothMaterials;
+            if (e1.physicsbody != null){
+              e1.x -= overlapX * (0.1 + bothMaterials);
+              e1.physicsbody.velocity.x = -e1.physicsbody.velocity.x * bothMaterials;
+            }
             return RIGHT;
           }
         }
@@ -122,7 +130,6 @@ class Camera extends Object {
       y = world.h - h;
     }
 
-    //println(y);
     world.camX = x;
     world.camY = y;
   }

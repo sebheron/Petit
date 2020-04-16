@@ -22,15 +22,16 @@ void setup() {
   playerSprites = new SpriteSheet("player.png", 15, 10);
   playerSprites.titleSprite(0, "still");
   playerSprites.titleSprite(1, "jump");
-  playerSprites.titleSprite(2, "run");
-  playerSprites.titleSprite(3, "run");
+  playerSprites.titleSprite(2, "run 1");
+  playerSprites.titleSprite(3, "run 2");
 
   boxSprites = new SpriteSheet("box.png", 10, 10);
   boxSprites.titleSprite(0, "closed");
   boxSprites.titleSprite(1, "broken");
   
   groundSprites = new SpriteSheet("platform.png", 30, 10);
-  groundSprites.titleSprite(0, "platform");
+  groundSprites.titleSprite(0, "untouched");
+  groundSprites.titleSprite(1, "touched");
   
   springSprites = new SpriteSheet("spring.png", 10, 10);
 
@@ -57,8 +58,9 @@ void setup() {
   
   platforms = new Entity[5];
   for (int i = 0; i < 5; i++){
-    platforms[i] = new Entity(90 * i + 90, height/2 + 120, 90, 30, groundSprites);
+    platforms[i] = new Entity(100 * i + 90, height/2 + 120, 90, 30, groundSprites.copy());
     platforms[i].addComponent(new Collider(90, 30, 0, 0));
+    platforms[i].setSprite("untouched");
     world.addEntity(platforms[i]);
   }
   
@@ -109,6 +111,12 @@ void test() {
   if (player.y > world.h){
     player.x = startPos.x;
     player.y = startPos.y;
+  }
+  
+  for (Entity platform : platforms){
+    if (platform.collider.collisionSide != 0){
+      platform.setSprite("touched");
+    }
   }
   
   camera.update(player);
