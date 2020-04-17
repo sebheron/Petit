@@ -127,7 +127,7 @@ void test() {
   }
 
   for (Entity platform : platforms) {
-    if (platform.collider.collisionSide != COLLISION_NONE) {
+    if (platform.collider.collisionSide != ZERO) {
       platform.setSprite("touched");
     }
   }

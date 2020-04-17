@@ -27,16 +27,16 @@ class Physicsbody extends EntityComponent {
   Physicsbody() {
     super();
     drag = 10;
-    velocity = new PVector(0, 0);
-    acceleration = new PVector(0,0);
+    velocity = ZERO.copy();
+    acceleration = ZERO.copy();
   }
 
   Physicsbody(float _drag, boolean _locked) {
     super();
     drag = _drag;
     locked = _locked;
-    velocity = new PVector(0, 0);
-    acceleration = new PVector(0, 0);
+    velocity = ZERO.copy();
+    acceleration = ZERO.copy();
   }
 
   void update() {
@@ -87,7 +87,7 @@ class Collider extends EntityComponent {
     super();
     size = new PVector(x, y);
     halfSize = new PVector(x/2, y/2);
-    collisionSide = COLLISION_NONE;
+    collisionSide = ZERO;
     material = _material;
     collisionOn = true;
   }
