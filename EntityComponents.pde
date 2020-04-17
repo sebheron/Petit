@@ -22,7 +22,7 @@ abstract class EntityComponent {
 class Physicsbody extends EntityComponent {
   PVector velocity, acceleration;
   float drag;
-  boolean locked, grounded;
+  boolean locked;
 
   Physicsbody() {
     super();
@@ -78,7 +78,8 @@ class Physicsbody extends EntityComponent {
 }
 
 class Collider extends EntityComponent {
-  PVector size, halfSize, collisionSide;
+  PVector size, halfSize;
+  Collision collisions;
   int layer;
   float material;
   boolean collisionOn;
@@ -87,7 +88,7 @@ class Collider extends EntityComponent {
     super();
     size = new PVector(x, y);
     halfSize = new PVector(x/2, y/2);
-    collisionSide = ZERO;
+    collisions = new Collision();
     material = _material;
     collisionOn = true;
   }
@@ -100,6 +101,7 @@ class Collider extends EntityComponent {
   }
 
   void update() {
+    collisions.off();
   }
 }
 

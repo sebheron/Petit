@@ -16,3 +16,28 @@ class Object extends Rect {
     enabled = true;
   }
 }
+
+class Collision {
+  boolean top;
+  boolean bottom;
+  boolean left;
+  boolean right;
+
+  void off() {
+    top = false;
+    bottom = false;
+    left = false;
+    right = false;
+  }
+
+  void off(boolean _top, boolean _bottom, boolean _left, boolean _right) {
+    top = _top;
+    bottom = _bottom;
+    left = _left;
+    right = _right;
+  }
+  
+  boolean none(){
+    return top | bottom | left | right;
+  }
+}

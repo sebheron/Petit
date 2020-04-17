@@ -109,12 +109,12 @@ void test() {
     player.physicsbody.addForce(1, 0);
   if (KEY_LEFT)
     player.physicsbody.addForce(-1, 0);
-  if (KEY_UP && player.physicsbody.grounded)
+  if (KEY_UP && player.collider.collisions.bottom)
     player.physicsbody.addImpulseForce(0, -15);
   if (KEY_DOWN)
     player.physicsbody.addForce(0, 1);
 
-  if (!player.physicsbody.grounded) {
+  if (!player.collider.collisions.bottom) {
     player.setSprite("jump");
   } else if (abs(player.physicsbody.velocity.x) > 0) {
     player.setSprite(2 + ((frameCount / 20) % 2));
@@ -127,7 +127,7 @@ void test() {
   }
 
   for (Entity platform : platforms) {
-    if (platform.collider.collisionSide != ZERO) {
+    if (!platform.collider.collisions.none()) {
       platform.setSprite("touched");
     }
   }
