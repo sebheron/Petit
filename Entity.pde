@@ -22,7 +22,7 @@ class Entity extends Object {
       physicsbody = (Physicsbody)eC;
     } else if (eC instanceof Collider) {
       collider = (Collider)eC;
-    } else if (eC instanceof CollisionMask){
+    } else if (eC instanceof CollisionMask) {
       mask = (CollisionMask)eC;
     }
   }
@@ -33,7 +33,7 @@ class Entity extends Object {
       physicsbody = null;
     } else if (eC instanceof Physicsbody) {
       collider = null;
-    } else if (eC instanceof CollisionMask){
+    } else if (eC instanceof CollisionMask) {
       mask = null;
     }
     components.remove(index);
@@ -45,7 +45,7 @@ class Entity extends Object {
       physicsbody = null;
     } else if (eC instanceof Physicsbody) {
       collider = null;
-    } else if (eC instanceof CollisionMask){
+    } else if (eC instanceof CollisionMask) {
       mask = null;
     }
   }
@@ -66,9 +66,9 @@ class Entity extends Object {
   void setSprite(String title) {
     spritesheet.setSprite(title);
   }
-  
-  void setCollisionSide(PVector collision){
-    if (collider != null){
+
+  void setCollisionSide(PVector collision) {
+    if (collider != null) {
       collider.collisionSide = collision;
     }
   }

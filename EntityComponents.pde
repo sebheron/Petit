@@ -43,11 +43,11 @@ class Physicsbody extends EntityComponent {
     if (!locked) {
       velocity.add(acceleration);
       entity.position.add(velocity);
-      
+
       velocity.mult(1/drag);
       velocity.x *= FRICTION;
       velocity.add(GRAVITY);
-      
+
       zeroLowVelX();
     }
     acceleration.set(0, 0);
@@ -69,9 +69,9 @@ class Physicsbody extends EntityComponent {
     velocity.x += x;
     velocity.y += y;
   }
-  
-  void zeroLowVelX(){
-    if (abs(velocity.x) < 0.01){
+
+  void zeroLowVelX() {
+    if (abs(velocity.x) < 0.01) {
       velocity.x = 0;
     }
   }
@@ -99,28 +99,30 @@ class Collider extends EntityComponent {
     collisionOn = true;
   }
 
-  void update() {}
+  void update() {
+  }
 }
 
 class CollisionMask extends EntityComponent {
   List<Integer> layers;
-  
-  CollisionMask(int ... _layers){
+
+  CollisionMask(int ... _layers) {
     layers = new ArrayList();
-    for (int layer : _layers){
-      layers.add(layer); 
-    }
-  }
-  
-  void add(int layer){
-    if (!layers.contains(layer)){
+    for (int layer : _layers) {
       layers.add(layer);
     }
   }
-  
-  boolean contains(int layer){
-    return layers.contains(layer); 
+
+  void add(int layer) {
+    if (!layers.contains(layer)) {
+      layers.add(layer);
+    }
   }
-  
-  void update() {}
+
+  boolean contains(int layer) {
+    return layers.contains(layer);
+  }
+
+  void update() {
+  }
 }

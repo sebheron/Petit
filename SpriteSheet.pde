@@ -1,18 +1,18 @@
 class SpriteSheet {  
 
   private PImage[] sprites;
-  
+
   private String[] names;
-  
+
   private int spriteCount;
-  
+
   private int spriteWidth, spriteHeight;
-  
+
   private int spriteIndex;
-  
+
   private PVector offset;
-  
-  SpriteSheet(PImage[] _sprites, String[] _names, int _spriteCount, int _spriteWidth, int _spriteHeight, int _spriteIndex, PVector _offset){
+
+  SpriteSheet(PImage[] _sprites, String[] _names, int _spriteCount, int _spriteWidth, int _spriteHeight, int _spriteIndex, PVector _offset) {
     sprites = _sprites;
     names = _names;
     spriteCount = _spriteCount;
@@ -38,78 +38,77 @@ class SpriteSheet {
       }
     }
   }
-  
-  int getSpriteCount(){
+
+  int getSpriteCount() {
     return spriteCount;
   }
-  
-  int getSpriteWidth(){
-    return spriteWidth; 
+
+  int getSpriteWidth() {
+    return spriteWidth;
   }
-  
-  int getSpriteHeight(){
-    return spriteHeight; 
+
+  int getSpriteHeight() {
+    return spriteHeight;
   }
-  
-  void offset(float x, float y){
+
+  void offset(float x, float y) {
     offset.set(-0.5 + (x/2), -0.5 + (y/2));
   }
-  
-  void setSprite(int index){
-    if (index >= 0 & index < sprites.length){
+
+  void setSprite(int index) {
+    if (index >= 0 & index < sprites.length) {
       spriteIndex = index;
     }
   }
-  
-  void setSprite(String title){
+
+  void setSprite(String title) {
     int index = titleToIndex(title);
-    if (index >= 0 & index < sprites.length){
+    if (index >= 0 & index < sprites.length) {
       spriteIndex = index;
     }
   }
-  
-  void drawSprite(float x, float y){
+
+  void drawSprite(float x, float y) {
     image(sprites[spriteIndex], x + (offset.x * spriteWidth), y + (offset.y * spriteHeight));
   }
-  
-  void drawSprite(float x, float y, float w, float h){
+
+  void drawSprite(float x, float y, float w, float h) {
     image(sprites[spriteIndex], x + (offset.x * w), y + (offset.y * h), w, h);
   }
-  
-  void animateSprite(){
-    
+
+  void animateSprite() {
   }
-  
-  void titleSprite(int index, String title){
+
+  void titleSprite(int index, String title) {
     names[index] = title;
   }
-  
-  int titleToIndex(String title){
-    for (int i = 0; i < names.length; i++){
-      if (names[i].equals(title)){
+
+  int titleToIndex(String title) {
+    for (int i = 0; i < names.length; i++) {
+      if (names[i].equals(title)) {
         return i;
       }
     }
     return -1;
   }
-  
-  PImage getSprite(int index){
-    if (index > 0 & index < sprites.length){
+
+  PImage getSprite(int index) {
+    if (index > 0 & index < sprites.length) {
       return sprites[index];
     }
     return null;
   }
-  
-  PImage getSprite(String title){
+
+  PImage getSprite(String title) {
     int index = titleToIndex(title);
-    if (index > 0 & index < sprites.length){
+    if (index > 0 & index < sprites.length) {
       return sprites[index];
     }
     return null;
   }
-  
+
   //Just a shallow copy!
-  SpriteSheet copy(){
+  SpriteSheet copy() {
     return new SpriteSheet(sprites, names, spriteCount, spriteWidth, spriteHeight, spriteIndex, offset);
   }
 }
