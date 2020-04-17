@@ -122,9 +122,8 @@ void test() {
     player.setSprite("still");
   }
 
-  if (player.y > world.h) {
-    player.x = startPos.x;
-    player.y = startPos.y;
+  if (player.position.y > world.size.y) {
+    player.position.set(startPos);
   }
 
   for (Entity platform : platforms) {

@@ -10,23 +10,22 @@ class SpriteSheet {
   
   private int spriteIndex;
   
-  private float oX, oY;
+  private PVector offset;
   
-  SpriteSheet(PImage[] _sprites, String[] _names, int _spriteCount, int _spriteWidth, int _spriteHeight, int _spriteIndex, float _oX, float _oY){
+  SpriteSheet(PImage[] _sprites, String[] _names, int _spriteCount, int _spriteWidth, int _spriteHeight, int _spriteIndex, PVector _offset){
     sprites = _sprites;
     names = _names;
     spriteCount = _spriteCount;
     spriteWidth = _spriteWidth;
     spriteHeight = _spriteHeight;
     spriteIndex = _spriteIndex;
-    oX = _oX;
-    oY = _oY;
+    offset = _offset.copy();
   }
 
   SpriteSheet(String fileLocation, int _spriteWidth, int _spriteHeight) {
     spriteWidth = _spriteWidth;
     spriteHeight = _spriteHeight;
-    oX = oY = -0.5;
+    offset = new PVector(-0.5, -0.5);
     PImage sheet = loadImage(fileLocation);
     int in = 0;
     spriteCount = (sheet.width / _spriteWidth) * (sheet.height / _spriteHeight);
@@ -53,8 +52,7 @@ class SpriteSheet {
   }
   
   void offset(float x, float y){
-    oX = -0.5 + (x/2);
-    oY = -0.5 + (y/2);
+    offset.set(-0.5 + (x/2), -0.5 + (y/2));
   }
   
   void setSprite(int index){
@@ -71,11 +69,11 @@ class SpriteSheet {
   }
   
   void drawSprite(float x, float y){
-    image(sprites[spriteIndex], x + (oX * spriteWidth), y + (oY * spriteHeight));
+    image(sprites[spriteIndex], x + (offset.x * spriteWidth), y + (offset.y * spriteHeight));
   }
   
   void drawSprite(float x, float y, float w, float h){
-    image(sprites[spriteIndex], x + (oX * w), y + (oY * h), w, h);
+    image(sprites[spriteIndex], x + (offset.x * w), y + (offset.y * h), w, h);
   }
   
   void animateSprite(){
@@ -112,6 +110,6 @@ class SpriteSheet {
   
   //Just a shallow copy!
   SpriteSheet copy(){
-    return new SpriteSheet(sprites, names, spriteCount, spriteWidth, spriteHeight, spriteIndex, oX, oY);
+    return new SpriteSheet(sprites, names, spriteCount, spriteWidth, spriteHeight, spriteIndex, offset);
   }
 }

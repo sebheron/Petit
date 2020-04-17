@@ -27,7 +27,7 @@ class Physicsbody extends EntityComponent {
   Physicsbody() {
     super();
     drag = 10;
-    velocity = new PVector(0,0);
+    velocity = new PVector(0, 0);
     acceleration = new PVector(0,0);
   }
 
@@ -42,8 +42,7 @@ class Physicsbody extends EntityComponent {
   void update() {
     if (!locked) {
       velocity.add(acceleration);
-      entity.x += velocity.x;
-      entity.y += velocity.y;
+      entity.position.add(velocity);
       
       velocity.mult(1/drag);
       velocity.x *= FRICTION;
@@ -51,7 +50,7 @@ class Physicsbody extends EntityComponent {
       
       zeroLowVelX();
     }
-    acceleration = new PVector(0, 0);
+    acceleration.set(0, 0);
   }
 
   void addForce(PVector force) {

@@ -1,14 +1,10 @@
 class Rect {
-  float x, y, w, h;
-  float halfWidth, halfHeight;
+  PVector position, size, halfSize;
   
   Rect(float _x, float _y, float _w, float _h){
-    x = _x;
-    y = _y;
-    w = _w;
-    h = _h;
-    halfWidth = _w/2;
-    halfHeight = _h/2;
+    position = new PVector(_x, _y);
+    size = new PVector(_w, _h);
+    halfSize = new PVector(_w/2, _h/2);
   }
 }
 

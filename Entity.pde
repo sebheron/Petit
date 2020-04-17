@@ -73,8 +73,8 @@ class Entity extends Object {
     }
   }
 
-  void display(float camX, float camY) {
-    spritesheet.drawSprite(x - camX, y - camY, w, h);
+  void display(PVector cam) {
+    spritesheet.drawSprite(position.x - cam.x, position.y - cam.y, size.x, size.y);
   }
 
   void update() {

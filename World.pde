@@ -11,16 +11,18 @@ PVector COLLISION_NONE = new PVector(0, 0);
 class World extends Object {
 
   List<Entity> entities;
-  float camX, camY;
+  PVector cam, gravityNormal;
 
   World() {
     super(0, 0, width, height); 
     entities = new ArrayList<Entity>();
+    gravityNormal = GRAVITY.normalize();
   }
 
   World(float _w, float _h) {
     super(0, 0, _w, _h);
     entities = new ArrayList<Entity>();
+    gravityNormal = GRAVITY.normalize();
   }
 
   void addEntity(Entity e) {
@@ -36,9 +38,9 @@ class World extends Object {
       for (Entity e2 : entities){
         if (e1.id != e2.id){
           e1.setCollisionSide(CheckCollisions(e1, e2));
-          }
-          if (e1.collider != null && e1.physicsbody != null && e1.collider.collisionSide.equals(GRAVITY.normalize())){
-            e1.physicsbody.grounded = true;
+        }
+        if (e1.collider != null && e1.physicsbody != null && e1.collider.collisionSide.equals(gravityNormal)){
+          e1.physicsbody.grounded = true;
         }
       }
     }
@@ -46,7 +48,7 @@ class World extends Object {
 
   void display() {
     for (Entity e : entities) {
-      e.display(camX, camY);
+      e.display(cam);
     }
   }
 
@@ -61,8 +63,8 @@ class World extends Object {
     }
     
     // Get the x and y distance between the objects.
-    float distanceX = e1.x - e2.x;
-    float distanceY = e1.y - e2.y;
+    float distanceX = e1.position.x - e2.position.x;
+    float distanceY = e1.position.y - e2.position.y;
 
     // Get the half widths combined and half heights combined.
     float bothHalfWidths = e1.collider.halfSize.x + e2.collider.halfSize.x;
@@ -80,14 +82,14 @@ class World extends Object {
         if (overlapX >= overlapY) {
           if (distanceY > 0) {
             if (e1.physicsbody != null){
-              e1.y += overlapY * (0.1 + bothMaterials);
+              e1.position.y += overlapY * (0.1 + bothMaterials);
               if (e1.physicsbody.velocity.y < 0)
                 e1.physicsbody.velocity.y = -e1.physicsbody.velocity.y * bothMaterials;
             }
             return COLLISION_TOP;
           } else {
             if (e1.physicsbody != null){
-              e1.y -= overlapY * (0.1 + bothMaterials);
+              e1.position.y -= overlapY * (0.1 + bothMaterials);
               if (e1.physicsbody.velocity.y > 0)
                 e1.physicsbody.velocity.y = -e1.physicsbody.velocity.y * bothMaterials;
             }
@@ -96,14 +98,14 @@ class World extends Object {
         } else {
           if (distanceX > 0) {
             if (e1.physicsbody != null){
-              e1.x += overlapX * (0.1 + bothMaterials);
+              e1.position.x += overlapX * (0.1 + bothMaterials);
               if (e1.physicsbody.velocity.x < 0 || e2.physicsbody == null)
                 e1.physicsbody.velocity.x = -e1.physicsbody.velocity.x * bothMaterials;
             }
             return COLLISION_LEFT;
           } else {
             if (e1.physicsbody != null){
-              e1.x -= overlapX * (0.1 + bothMaterials);
+              e1.position.x -= overlapX * (0.1 + bothMaterials);
               if (e1.physicsbody.velocity.x > 0 || e2.physicsbody == null)
                 e1.physicsbody.velocity.x = -e1.physicsbody.velocity.x * bothMaterials;
             }
@@ -127,24 +129,23 @@ class Camera extends Object {
   }
 
   void update(Object object) {
-    x = floor(object.x + (object.halfWidth) - (w / 2));
-    y = floor(object.y + (object.halfHeight) - (h / 2));
+    position.x = floor(object.position.x + (object.halfSize.x) - (size.x / 2));
+    position.y = floor(object.position.y + (object.halfSize.y) - (size.y / 2));
 
-    if (x < world.x) {
-      x = world.x;
+    if (position.x < world.position.x) {
+      position.x = world.position.x;
     }
-    if (y < world.y) {
-      y = world.y;
+    if (position.y < world.position.y) {
+      position.y = world.position.y;
     }
-    if (x + w > world.x + world.w) {
-      x = world.x + world.w - w;
+    if (position.x + size.x > world.position.x + world.size.x) {
+      position.x = world.position.x + world.size.x - size.x;
     }
-    if (y + h > world.h) {
-      y = world.h - h;
+    if (position.y + size.y > world.size.y) {
+      position.y = world.size.y - size.y;
     }
 
-    world.camX = x;
-    world.camY = y;
+    world.cam.set(position);
   }
 
   void setWorld(World _world) {
