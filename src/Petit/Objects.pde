@@ -38,6 +38,11 @@ class Collision {
   }
   
   boolean none(){
+    println();
     return top | bottom | left | right;
+  }
+  
+  public String toString(){
+    return "top:" + top + " bottom:" + bottom + " left:" + left + " right:" + right;
   }
 }

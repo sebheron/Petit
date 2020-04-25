@@ -75,7 +75,10 @@ class Entity extends Object {
     for (EntityComponent eC : components) {
       eC.update();
     }
+    lateUpdate();
   }
+  
+  void lateUpdate(){}
 
   PVector getVelocity() {
     if (physicsbody != null) {

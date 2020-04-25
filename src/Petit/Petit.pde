@@ -37,7 +37,6 @@ void setup() {
 
   brickSprites = new SpriteSheet("brick.png", 10, 10);
 
-
   crate = new Entity(width/2 + 260, height/2, 30, 30, boxSprites);
   crate.addComponent(new Physicsbody(1.1, false));
   crate.addComponent(new Collider(30, 30, 0));
@@ -127,7 +126,7 @@ void test() {
   }
 
   for (Entity platform : platforms) {
-    if (!platform.collider.collisions.none()) {
+    if (platform.collider.collisions.none()) {
       platform.setSprite("touched");
     }
   }

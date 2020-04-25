@@ -6,19 +6,17 @@ PVector ZERO = new PVector(0, 0);
 class World extends Object {
 
   List<Entity> entities;
-  PVector cam, gravityNormal;
+  PVector cam;
 
   World() {
     super(0, 0, width, height); 
     entities = new ArrayList<Entity>();
-    gravityNormal = GRAVITY.normalize();
     cam = ZERO.copy();
   }
 
   World(float _w, float _h) {
     super(0, 0, _w, _h);
     entities = new ArrayList<Entity>();
-    gravityNormal = GRAVITY.normalize();
     cam = ZERO.copy();
   }
 
