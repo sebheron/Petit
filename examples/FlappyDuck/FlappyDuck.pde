@@ -66,7 +66,7 @@ void update() {
       duck.setSprite("wings down");
     }
     
-    if (duck.position.y > height - duck.size.y / 2 || duck.collider.collisions.none()){
+    if (duck.position.y > height - duck.size.y / 2 || duck.position.y < 0 + duck.size.y / 2 || duck.collider.collisions.none()){
       duck.setSprite("knocked out");
       knockedout = true;
     }
