@@ -10,4 +10,5 @@ Petit features:
  - Basic spritesheet implementation
  - Following camera
 
-Editor coming soon...
+Next up:
+- Collision depth
