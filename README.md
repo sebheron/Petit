@@ -10,5 +10,4 @@ Petit features:
  - Basic spritesheet implementation
  - Following camera
 
-Next up:
-- Collision depth
+Originally the plan was to add more, but I don't see too many applications for this aside from prototypes and small beginner games so this'll be the final version.
